@@ -1,0 +1,29 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "headers": [
+    {
+      "source": "/api/:path*",
+      "headers": [{ "key": "x-vercel-enable-rewrite-caching", "value": "0" }]
+    },
+    {
+      "source": "/auth/:path*",
+      "headers": [{ "key": "x-vercel-enable-rewrite-caching", "value": "0" }]
+    },
+    {
+      "source": "/audio/:path*",
+      "headers": [{ "key": "x-vercel-enable-rewrite-caching", "value": "0" }]
+    },
+    {
+      "source": "/static/:path*",
+      "headers": [{ "key": "x-vercel-enable-rewrite-caching", "value": "0" }]
+    }
+  ],
+  "rewrites": [
+    { "source": "/auth/:path*", "destination": "/api/proxy/auth/:path*" },
+    { "source": "/audio/:path*", "destination": "/api/proxy/audio/:path*" },
+    { "source": "/static/:path*", "destination": "/api/proxy/static/:path*" },
+    { "source": "/health/:path*", "destination": "/api/proxy/health/:path*" },
+    { "source": "/openapi.json", "destination": "/api/proxy/openapi.json" },
+    { "source": "/:path*", "destination": "/index.html" }
+  ]
+}
