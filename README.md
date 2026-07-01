@@ -1,10 +1,10 @@
 # Paidviewer Web
 
-Frontend repository for Paidviewer dashboard and OBS pages.
+Frontend-репозиторий Paidviewer: dashboard, OBS-страницы и пользовательский интерфейс.
 
-The Vercel project root should be set to `frontend`.
+В Vercel нужно выбрать root directory: `frontend`.
 
-## Vercel Settings
+## Настройки Vercel
 
 - Framework preset: Vite
 - Root directory: `frontend`
@@ -13,7 +13,7 @@ The Vercel project root should be set to `frontend`.
 
 ## Production Env
 
-Set these in Vercel:
+Добавить в Vercel:
 
 ```env
 VITE_BOT_SERVICE_URL=https://api.example.com
@@ -22,12 +22,12 @@ VITE_FRONTEND_URL=https://app.example.com
 VITE_LOCAL_TTS_AGENT_URL=
 ```
 
-Use the same root domain for app and API when possible, for example:
+По возможности используй один корневой домен для frontend и API:
 
-- app: `https://app.example.com`
-- api: `https://api.example.com`
+- frontend: `https://app.example.com`
+- API: `https://api.example.com`
 
-## Local Development
+## Локальная Разработка
 
 ```powershell
 cd frontend
@@ -35,8 +35,8 @@ npm install
 npm run dev
 ```
 
-Local Vite dev proxies `/api` and `/ws` to `http://localhost:8000`.
+Локальный Vite dev proxy проксирует `/api` и `/ws` на `http://localhost:8000`.
 
-## Update
+## Обновление
 
-Push to `main`. Vercel deploys automatically.
+Push в `main`. Vercel автоматически соберёт и выкатит новую версию.
