@@ -19,12 +19,11 @@
     }
   ],
   "rewrites": [
-    { "source": "/api/:path*", "destination": "http://YOUR_SERVER_IP:8000/api/:path*" },
-    { "source": "/auth/:path*", "destination": "http://YOUR_SERVER_IP:8000/auth/:path*" },
-    { "source": "/audio/:path*", "destination": "http://YOUR_SERVER_IP:8000/audio/:path*" },
-    { "source": "/static/:path*", "destination": "http://YOUR_SERVER_IP:8000/static/:path*" },
-    { "source": "/health/:path*", "destination": "http://YOUR_SERVER_IP:8000/health/:path*" },
-    { "source": "/openapi.json", "destination": "http://YOUR_SERVER_IP:8000/openapi.json" },
+    { "source": "/auth/:path*", "destination": "/api/proxy/auth/:path*" },
+    { "source": "/audio/:path*", "destination": "/api/proxy/audio/:path*" },
+    { "source": "/static/:path*", "destination": "/api/proxy/static/:path*" },
+    { "source": "/health/:path*", "destination": "/api/proxy/health/:path*" },
+    { "source": "/openapi.json", "destination": "/api/proxy/openapi.json" },
     { "source": "/:path*", "destination": "/index.html" }
   ]
 }
