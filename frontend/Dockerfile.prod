@@ -1,0 +1,33 @@
+# Multi-stage build for production
+FROM node:22-alpine AS builder
+
+WORKDIR /app
+
+ARG VITE_LOCAL_TTS_AGENT_URL=
+ARG VITE_BOT_SERVICE_URL=
+ARG VITE_BOT_SERVICE_WS_URL=
+
+ENV VITE_LOCAL_TTS_AGENT_URL=$VITE_LOCAL_TTS_AGENT_URL
+ENV VITE_BOT_SERVICE_URL=$VITE_BOT_SERVICE_URL
+ENV VITE_BOT_SERVICE_WS_URL=$VITE_BOT_SERVICE_WS_URL
+
+# Install dependencies
+COPY package*.json ./
+RUN npm ci
+
+# Build static assets
+COPY . .
+RUN npm run build
+
+# Production stage with Nginx
+FROM nginx:alpine
+
+# Compose healthcheck uses curl.
+RUN apk add --no-cache curl
+
+# Copy built frontend
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+EXPOSE 80 443
+
+CMD ["nginx", "-g", "daemon off;"]

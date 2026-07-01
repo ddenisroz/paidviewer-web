@@ -1,0 +1,73 @@
+{
+  "compilerOptions": {
+    // === Базовые настройки ===
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    
+    // === Постепенная миграция ===
+    "allowJs": true,              // Разрешить JS файлы для постепенной миграции
+    "checkJs": true,              // Проверять JS файлы с помощью TypeScript
+    "noEmit": true,               // Не генерировать файлы (Vite делает это)
+    
+    // === Строгость типизации (постепенное включение) ===
+    "strict": true,                // Включен полный strict режим
+    "noImplicitAny": true,         // Включено - требуются явные типы
+    "strictNullChecks": true,      // Включено - проверка на null/undefined
+    "strictFunctionTypes": true,   // Оставим включенным
+    "strictBindCallApply": true,   // Оставим включенным
+    "strictPropertyInitialization": false,
+    "noImplicitThis": true,        // Оставим включенным
+    "alwaysStrict": true,          // Оставим включенным
+    
+    // === Дополнительные проверки ===
+    "noUnusedLocals": false,       // Слишком много ошибок, включим позже
+    "noUnusedParameters": false,   // Слишком много ошибок, включим позже
+    "noImplicitReturns": false,    // Слишком много ошибок, включим позже
+    "noFallthroughCasesInSwitch": true,
+    
+    // === Пути и алиасы ===
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "resolveJsonModule": true,
+    "isolatedModules": true,      // Требовать для Vite
+    
+    // === Дополнительные опции ===
+    "skipLibCheck": true,         // Пропустить проверку типов библиотек (быстрее)
+    "esModuleInterop": true,      // Совместимость с CommonJS
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    
+    // === Source Maps ===
+    "sourceMap": true,
+    "inlineSourceMap": false,
+    "inlineSources": false,
+    
+    // === Дополнительные типы ===
+    "types": ["vite/client", "node", "jest", "@testing-library/jest-dom"]
+  },
+  "include": [
+    "src/**/*",
+    "vite.config.js",
+    "vite.config.ts",
+    "vitest.config.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    "src/tests/**/*",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.test.js",
+    "**/*.test.jsx"
+  ],
+  "ts-node": {
+    "esm": true
+  }
+}
+
