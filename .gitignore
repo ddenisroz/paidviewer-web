@@ -4,6 +4,7 @@ frontend/build/
 frontend/.env
 frontend/.env.*
 !frontend/.env.example
+!frontend/.env.ip-only.example
 *.log
 .DS_Store
 Thumbs.db
