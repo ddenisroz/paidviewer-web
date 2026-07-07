@@ -1,4 +1,6 @@
-﻿import { logger } from '@/shared/utils/prodLogger';
+import { logger } from '@/shared/utils/prodLogger';
+
+import { getWidgetWebSocketBaseUrl } from '@/widgets/shared/widgetUrls';
 
 type ChatRole = 'broadcaster' | 'moderator' | 'vip' | 'subscriber' | 'normal';
 type Platform = 'twitch' | 'vk';
@@ -165,17 +167,7 @@ class ChatWidget {
     private connectWebSocket(): void {
         const urlParams = new URLSearchParams(window.location.search);
         const userId = encodeURIComponent(urlParams.get('user') || 'default');
-        const fallbackBase =
-            window.location.protocol === 'https:' ? `wss://${window.location.host}` : `ws://${window.location.host}`;
-        let base = this.config?.wsUrl || fallbackBase;
-        try {
-            const parsed = new URL(base);
-            if (parsed.protocol !== 'ws:' && parsed.protocol !== 'wss:') {
-                base = fallbackBase;
-            }
-        } catch {
-            base = fallbackBase;
-        }
+        const base = getWidgetWebSocketBaseUrl(this.config?.wsUrl);
         const wsUrl = `${base}/ws/chat-widget/${userId}`;
         if (!wsUrl || wsUrl.includes('null')) {
             logger.warn('Invalid WebSocket URL:', wsUrl);

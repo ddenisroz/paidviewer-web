@@ -1,4 +1,6 @@
-﻿import { logger } from '@/shared/utils/prodLogger';
+import { logger } from '@/shared/utils/prodLogger';
+
+import { getWidgetWebSocketBaseUrl } from '@/widgets/shared/widgetUrls';
 
 type Rarity = 'common' | 'rare' | 'epic' | 'legendary' | string;
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
@@ -103,8 +105,7 @@ class LootboxWidget {
     }
 
     private connectWebSocket(userId: string | null): void {
-        const wsBaseUrl =
-            window.location.protocol === 'https:' ? `wss://${window.location.host}` : `ws://${window.location.host}`;
+        const wsBaseUrl = getWidgetWebSocketBaseUrl();
         const wsUrl = `${wsBaseUrl}/ws/lootbox-widget/${userId || 'default'}`;
         const WidgetWebSocketClass = (
             window as Window & {
