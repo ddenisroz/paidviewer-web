@@ -3,22 +3,44 @@
  * URL utility functions.
  */
 
+const trimTrailingSlashes = (value: string): string => value.replace(/\/+$/, '');
+
+const getConfiguredEnvUrl = (...values: Array<string | undefined>): string => {
+    for (const value of values) {
+        const normalized = trimTrailingSlashes((value || '').trim());
+        if (normalized) {
+            return normalized;
+        }
+    }
+
+    return '';
+};
+
 /**
  * Get the API base URL based on environment.
  */
 export const getApiUrl = (): string => {
-    if (import.meta.env.VITE_API_URL) {
-        return import.meta.env.VITE_API_URL;
+    const configuredUrl = getConfiguredEnvUrl(
+        import.meta.env.VITE_BOT_SERVICE_URL as string | undefined,
+        import.meta.env.VITE_API_BASE_URL as string | undefined,
+        import.meta.env.VITE_API_URL as string | undefined
+    );
+    if (configuredUrl) {
+        return configuredUrl;
     }
-    return window.location.origin;
+    return trimTrailingSlashes(window.location.origin);
 };
 
 /**
  * Get the WebSocket base URL based on environment.
  */
 export const getWsUrl = (): string => {
-    if (import.meta.env.VITE_WS_BASE_URL) {
-        return import.meta.env.VITE_WS_BASE_URL;
+    const configuredWsUrl = getConfiguredEnvUrl(
+        import.meta.env.VITE_BOT_SERVICE_WS_URL as string | undefined,
+        import.meta.env.VITE_WS_BASE_URL as string | undefined
+    );
+    if (configuredWsUrl) {
+        return configuredWsUrl;
     }
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     return `${protocol}//${window.location.host}`;
