@@ -15,10 +15,10 @@ const hopByHopHeaders = new Set([
   'upgrade',
 ]);
 
-const copyRequestHeaders = (headers: IncomingHttpHeaders): Headers => {
+const copyRequestHeaders = (request: IncomingMessage): Headers => {
   const result = new Headers();
 
-  for (const [key, value] of Object.entries(headers)) {
+  for (const [key, value] of Object.entries(request.headers)) {
     const lowerKey = key.toLowerCase();
     if (hopByHopHeaders.has(lowerKey) || value === undefined) {
       continue;
@@ -33,6 +33,19 @@ const copyRequestHeaders = (headers: IncomingHttpHeaders): Headers => {
   }
 
   result.set('x-forwarded-proto', 'https');
+  if (request.headers.host) {
+    result.set('x-forwarded-host', request.headers.host);
+  }
+
+  const remoteAddress = request.socket.remoteAddress;
+  const existingForwardedFor = request.headers['x-forwarded-for'];
+  const forwardedFor = Array.isArray(existingForwardedFor) ? existingForwardedFor.join(', ') : existingForwardedFor;
+  if (remoteAddress) {
+    result.set('x-forwarded-for', forwardedFor ? `${forwardedFor}, ${remoteAddress}` : remoteAddress);
+  } else if (forwardedFor) {
+    result.set('x-forwarded-for', forwardedFor);
+  }
+
   return result;
 };
 
@@ -73,7 +86,7 @@ export default async function handler(request: IncomingMessage, response: Server
   const hasBody = method !== 'GET' && method !== 'HEAD';
   const init = {
     method,
-    headers: copyRequestHeaders(request.headers),
+    headers: copyRequestHeaders(request),
     body: hasBody ? (request as unknown as BodyInit) : undefined,
     duplex: 'half' as const,
     redirect: 'manual' as const,
