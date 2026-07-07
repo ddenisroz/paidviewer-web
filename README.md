@@ -36,6 +36,15 @@ VITE_LOCAL_TTS_AGENT_URL=
 
 Если backend будет только по IP, используй [frontend/.env.ip-only.example](frontend/.env.ip-only.example). Готовый `frontend/vercel.json` уже настроен без IP: реальный адрес сервера хранится только в Vercel Environment Variables `BOT_SERVICE_HTTP_TARGET` и `BOT_SERVICE_WS_TARGET`. Для WebSocket bridge в Vercel должен быть включен Fluid Compute.
 
+Для IP-only режима не оставляй `VITE_BOT_SERVICE_WS_URL` пустым в Vercel production env:
+
+```env
+VITE_BOT_SERVICE_WS_URL=wss://YOUR_VERCEL_APP_URL/api
+BOT_SERVICE_WS_TARGET=ws://YOUR_SERVER_IP:8000
+```
+
+Эта пара нужна не только dashboard-чату, но и OBS/widget страницам: chat overlay, drops widget, YouTube OBS overlay и legacy widgets тоже идут через Vercel WebSocket bridge.
+
 По возможности используй один корневой домен для frontend и API:
 
 - frontend: `https://app.example.com`
