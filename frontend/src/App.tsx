@@ -219,7 +219,7 @@ const App: React.FC = () => {
                             <Route
                                 path="dashboard/tts/local"
                                 element={
-                                    <RouteErrorBoundary routeName="Local TTS Settings">
+                                    <RouteErrorBoundary routeName="Self Hosted TTS">
                                         <Suspense fallback={<MinimalFallback />}>
                                             <LocalTTSSettingsPage />
                                         </Suspense>

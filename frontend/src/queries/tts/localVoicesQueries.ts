@@ -1,5 +1,5 @@
 /**
- * Local TTS voice queries proxied through bot_service.
+ * Self Hosted TTS voice queries proxied through bot_service.
  */
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
