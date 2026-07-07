@@ -51,6 +51,7 @@
     "types": ["vite/client", "node", "jest", "@testing-library/jest-dom"]
   },
   "include": [
+    "api/**/*.ts",
     "src/**/*",
     "vite.config.js",
     "vite.config.ts",
