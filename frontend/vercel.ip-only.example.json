@@ -19,6 +19,8 @@
     }
   ],
   "rewrites": [
+    { "source": "/api/ws/:path*", "destination": "/api/ws/:path*" },
+    { "source": "/api/:path*", "destination": "/api/proxy/api/:path*" },
     { "source": "/auth/:path*", "destination": "/api/proxy/auth/:path*" },
     { "source": "/audio/:path*", "destination": "/api/proxy/audio/:path*" },
     { "source": "/static/:path*", "destination": "/api/proxy/static/:path*" },
