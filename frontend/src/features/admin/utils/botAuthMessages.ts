@@ -8,6 +8,7 @@ const BOT_AUTH_ERROR_MESSAGES = {
         redirect_mismatch: 'OAuth redirect URL does not match provider settings',
         restart_failed: 'Token was saved, but the bot runtime could not restart',
         save_failed: 'Token was received, but it could not be saved',
+        unexpected_account: 'Only the configured Twitch bot account may be authorized',
     },
     ru: {
         access_denied: 'VK Live отклонил запрос авторизации',
@@ -18,6 +19,7 @@ const BOT_AUTH_ERROR_MESSAGES = {
         redirect_mismatch: 'OAuth redirect URL не совпадает с настройками провайдера',
         restart_failed: 'Токен сохранён, но runtime бота не удалось перезапустить',
         save_failed: 'Токен получен, но сохранить его не удалось',
+        unexpected_account: 'Разрешена авторизация только настроенного Twitch-аккаунта бота',
     },
 } as const;
 
