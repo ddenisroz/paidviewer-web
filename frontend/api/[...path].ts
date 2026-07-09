@@ -49,14 +49,15 @@ const copyRequestHeaders = (request: IncomingMessage): Headers => {
   return result;
 };
 
-const buildBackendUrl = (requestUrl: string | undefined): string => {
+export const buildBackendUrl = (requestUrl: string | undefined): string => {
   const targetBase = trimTrailingSlashes(process.env.BOT_SERVICE_HTTP_TARGET || '');
   if (!targetBase) {
     throw new Error('BOT_SERVICE_HTTP_TARGET is not configured');
   }
 
   const sourceUrl = new URL(requestUrl || '/api', 'http://localhost');
-  let backendPath = sourceUrl.pathname;
+  let backendPath = sourceUrl.searchParams.get('__backend_path') || sourceUrl.pathname;
+  sourceUrl.searchParams.delete('__backend_path');
 
   if (backendPath.startsWith('/api/proxy/')) {
     backendPath = backendPath.replace(/^\/api\/proxy/, '');
@@ -73,7 +74,7 @@ const writeProxyError = (response: ServerResponse, statusCode: number, message: 
   response.end(JSON.stringify({ detail: message }));
 };
 
-export default async function handler(request: IncomingMessage, response: ServerResponse): Promise<void> {
+export async function handler(request: IncomingMessage, response: ServerResponse): Promise<void> {
   let backendUrl: string;
   try {
     backendUrl = buildBackendUrl(request.url);
@@ -116,3 +117,5 @@ export default async function handler(request: IncomingMessage, response: Server
     writeProxyError(response, 502, error instanceof Error ? error.message : 'Backend proxy failed');
   }
 }
+
+export default handler;

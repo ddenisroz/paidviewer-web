@@ -20,12 +20,12 @@
   ],
   "rewrites": [
     { "source": "/api/ws/:path*", "destination": "/api/ws/:path*" },
-    { "source": "/api/:path*", "destination": "/api/proxy/api/:path*" },
-    { "source": "/auth/:path*", "destination": "/api/proxy/auth/:path*" },
-    { "source": "/audio/:path*", "destination": "/api/proxy/audio/:path*" },
-    { "source": "/static/:path*", "destination": "/api/proxy/static/:path*" },
-    { "source": "/health/:path*", "destination": "/api/proxy/health/:path*" },
-    { "source": "/openapi.json", "destination": "/api/proxy/openapi.json" },
+    { "source": "/api/:path*", "destination": "/api/proxy?__backend_path=/api/:path*" },
+    { "source": "/auth/:path*", "destination": "/api/proxy?__backend_path=/auth/:path*" },
+    { "source": "/audio/:path*", "destination": "/api/proxy?__backend_path=/audio/:path*" },
+    { "source": "/static/:path*", "destination": "/api/proxy?__backend_path=/static/:path*" },
+    { "source": "/health/:path*", "destination": "/api/proxy?__backend_path=/health/:path*" },
+    { "source": "/openapi.json", "destination": "/api/proxy?__backend_path=/openapi.json" },
     { "source": "/:path*", "destination": "/index.html" }
   ]
 }

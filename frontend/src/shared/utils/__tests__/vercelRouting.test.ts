@@ -13,7 +13,9 @@ describe('Vercel routing contract', () => {
         const spaFallbackIndex = rewrites.findIndex((rewrite) => rewrite.destination === '/index.html');
 
         expect(apiRewriteIndex).toBeGreaterThanOrEqual(0);
-        expect(rewrites[apiRewriteIndex]?.destination).toBe('/api/proxy/api/:path*');
+        expect(rewrites[apiRewriteIndex]?.destination).toBe(
+            '/api/proxy?__backend_path=/api/:path*'
+        );
         expect(spaFallbackIndex).toBeGreaterThan(apiRewriteIndex);
     });
 });
